@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Upload, FileText, Hash, Heading, AlertCircle, CheckCircle } from 'lucide-react';
 
-// Use environment variable if available, otherwise use Railway internal URL or localhost fallback
-const API_URL = import.meta.env.VITE_API_URL || 'https://document-parser.railway.internal' || 'http://localhost:3001';
+// Use environment variable if available, otherwise use Railway public URL or localhost fallback
+const API_URL = import.meta.env.VITE_API_URL || 'https://document-parser-production-08ad.up.railway.app' || 'http://localhost:3001';
 
 export default function DocumentUploader() {
   const [file, setFile] = useState(null);
