@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Upload, FileText, Hash, Heading, AlertCircle, CheckCircle } from 'lucide-react';
 
-const API_URL = 'http://localhost:3001';
+// Use environment variable if available, otherwise use Railway internal URL or localhost fallback
+const API_URL = import.meta.env.VITE_API_URL || 'https://document-parser.railway.internal' || 'http://localhost:3001';
 
 export default function DocumentUploader() {
   const [file, setFile] = useState(null);
@@ -43,40 +44,18 @@ export default function DocumentUploader() {
       });
 
       if (!response.ok) {
-        throw new Error('Upload failed');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Upload failed');
       }
 
       const data = await response.json();
       setResult(data);
     } catch (err) {
-      // Demo mode - simulate response for demonstration
-      setTimeout(() => {
-        const mockResponse = {
-          fileName: file.name,
-          totalPages: Math.floor(Math.random() * 50) + 1,
-          headings: [
-            'Introduction',
-            'Background',
-            'Methodology',
-            'Research Approach',
-            'Data Collection',
-            'Analysis',
-            'Results',
-            'Key Findings',
-            'Discussion',
-            'Limitations',
-            'Conclusion',
-            'Future Work',
-            'References'
-          ].slice(0, Math.floor(Math.random() * 8) + 5)
-        };
-        setResult(mockResponse);
-        setLoading(false);
-      }, 1500);
-      return;
+      console.error('Upload error:', err);
+      setError(`Error: ${err.message}. Backend URL: ${API_URL}`);
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
