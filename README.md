@@ -1,7 +1,7 @@
-#Document Parser 
+# Document Parser 
 A modern full stack web application that extracts metadata and headings from PDF and DOCX documents. Built with Node.js, Express, React, and Tailwind CSS.
 
-#Features
+# Features
 File Upload: Support for PDF and DOCX files (up to 10MB)
 Metadata Extraction: Automatically extracts:
 File name
